@@ -38,6 +38,7 @@ class WestenWorld:
         with open('verify.jpg', 'wb') as verify_img:
             verify_img.write(resp.content)
         self.verify_data['verify_code'] = get_verify_code('verify.jpg')
+        os.remove("verify.jpg")
         # print("verify_code:", self.verify_data['verify_code'])
         resp = self.session.post(check_url, headers=self.headers, data=self.verify_data, proxies=self.proxies)
         print(resp.text)
@@ -76,3 +77,4 @@ if __name__ == "__main__":
     with open('subscribe/trojan.txt', 'w') as f:
         f.write(str(subscribe))
     git_push()
+    

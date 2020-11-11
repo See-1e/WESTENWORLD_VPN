@@ -35,5 +35,9 @@ def get_fatest(node):
 
 
 def git_push():
-    _str = 'git add subscribe/trojan.txt && git commit -m "update route~" && git push'
-    os.system(_str)
+    path = os.getcwd()
+    _str = ' && git config user.name "qilianshuo" && git config user.email "2087989820@qq.com" && git add subscribe/trojan.txt && git commit -m "update route~" && git push'
+    str = "cd " + path + _str
+    os.system(str)
+
+
