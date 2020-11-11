@@ -44,12 +44,16 @@ session = requests.session()
 
 
 # 第一步---打开网页，保存cookie
-Login_Html = session.get(login_url, headers=headers).text
+proxies = {
+  "http": "http://58.220.95.30:10174",
+  "https": "http://58.220.95.30:10174",
+}
+Login_Html = session.get(login_url, headers=headers, proxies=proxies).text
 csrf_token = get_csrftoken(re.findall(r"window.init_text = '(.*?)'", Login_Html)[0])
 print("csrf_token:", csrf_token)
 
 # 第二步---请求验证码
-verify = session.get(verify_url, headers=headers)
+verify = session.get(verify_url, headers=headers, proxies=proxies)
 with open('verify.jpg', 'wb') as f:
     f.write(verify.content)
 verify_code = get_verify_code('verify.jpg')
@@ -68,11 +72,12 @@ regist_data = {
 """------------------------------------------------------------------------------------------------------------------"""
 
 # 第三步---打码验证，注册cookie
-check = session.post(check_url, headers=headers, data=check_data)
+check = session.post(check_url, headers=headers, data=check_data, proxies=proxies)
 print(check.text)
 
+
 # 第四步----POST注册接口注册
-regist = session.post(url=regist_url, headers=headers, data=regist_data)
+regist = session.post(url=regist_url, headers=headers, data=regist_data, proxies=proxies)
 print(regist.text)
 
 # 第五步---节点HTML
