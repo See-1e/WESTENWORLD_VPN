@@ -1,8 +1,21 @@
 # coding=utf-8
+import requests
 import execjs
 import json
 import os
 import re
+
+
+def get_proxies():
+    while True:
+        try:
+            proxy = requests.get("http://101.132.128.215:5010/get/").json().get("proxy")
+            test = requests.get('https://xbsj6147.xyz/', proxies={"https": "https://{}".format(proxy)}, timeout=5)
+            if test.status_code == 200:
+                return proxy
+            print(proxy, "Fail to connect")
+        except Exception:
+            requests.get("http://101.132.128.215:5010/delete/?proxy={}".format(proxy))
 
 
 def get_csrftoken(init_text):
@@ -21,5 +34,5 @@ def get_fatest(node):
 
 
 def git_push():
-    _str = 'git add . && git commit -m "update route~" && git push'
+    _str = 'git add subscribe/trojan.txt && git commit -m "update route~" && git push'
     os.system(_str)
