@@ -45,7 +45,6 @@ class WestenWorld:
         if resp.json()['data']['has_present']:
             return True
 
-<<<<<<< HEAD
     def regist(self):
         print("STEP_3——开始注册")
         resp = self.session.post(url=regist_url, headers=self.headers, data=self.regist_data, proxies=self.proxies)
@@ -58,23 +57,6 @@ class WestenWorld:
         route_all = re.findall(r'node_data: (.*?),\n};', resp.text)[0]
         self.trojan_url = get_fatest(route_all) + "#" + time.strftime("%m-%d %H:%M:%S", time.localtime()) + "\n"
         print(self.trojan_url)
-=======
-# 第一步---打开网页，保存cookie
-proxies = {
-  "http": "http://58.220.95.30:10174",
-  "https": "http://58.220.95.30:10174",
-}
-Login_Html = session.get(login_url, headers=headers, proxies=proxies).text
-csrf_token = get_csrftoken(re.findall(r"window.init_text = '(.*?)'", Login_Html)[0])
-print("csrf_token:", csrf_token)
-
-# 第二步---请求验证码
-verify = session.get(verify_url, headers=headers, proxies=proxies)
-with open('verify.jpg', 'wb') as f:
-    f.write(verify.content)
-verify_code = get_verify_code('verify.jpg')
-print("verify_code:", verify_code)
->>>>>>> ef8a91869cede7eec4290c1fe6b933991ddbe981
 
     def run(self):
         self.get_csrftoken()
@@ -82,7 +64,6 @@ print("verify_code:", verify_code)
         self.regist()
         self.get_route()
 
-<<<<<<< HEAD
 
 if __name__ == "__main__":
     ip = get_proxies()
@@ -96,28 +77,3 @@ if __name__ == "__main__":
     with open('subscribe/trojan.txt', 'w') as f:
         f.write(str(subscribe))
     git_push()
-=======
-# 第三步---打码验证，注册cookie
-check = session.post(check_url, headers=headers, data=check_data, proxies=proxies)
-print(check.text)
-
-
-# 第四步----POST注册接口注册
-regist = session.post(url=regist_url, headers=headers, data=regist_data, proxies=proxies)
-print(regist.text)
-
-# 第五步---节点HTML
-node_html = session.get(node_url).text
-# print(node_html)
-
-# 取高速全部节点
-node = re.findall(r'node_data: (.*?),\n};', node_html)[0]
-Trojan_url = get_fatest(node) + "#" + time.strftime("%m-%d %H:%M:%S", time.localtime()) + "\n"
-print(Trojan_url)
-
-# 提交订阅
-subscribe = base64.b64encode(Trojan_url.encode('utf-8')).decode(encoding='utf-8')
-with open('subscribe/trojan.txt', 'w') as f:
-    f.write(str(subscribe))
-git_push()
->>>>>>> ef8a91869cede7eec4290c1fe6b933991ddbe981
