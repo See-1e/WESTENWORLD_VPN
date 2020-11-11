@@ -88,4 +88,4 @@ print(Trojan_url)
 subscribe = base64.b64encode(Trojan_url.encode('utf-8')).decode(encoding='utf-8')
 with open('subscribe/trojan.txt', 'w') as f:
     f.write(str(subscribe))
-#git_push()
+git_push()
