@@ -1,5 +1,4 @@
 # coding=utf-8
-import requests
 import base64
 import time
 from Utils import *

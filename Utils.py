@@ -12,10 +12,11 @@ def get_proxies():
             proxy = requests.get("http://101.132.128.215:5010/get/").json().get("proxy")
             test = requests.get('https://xbsj6147.xyz/', proxies={"https": "https://{}".format(proxy)}, timeout=5)
             if test.status_code == 200:
+                print(proxy, "Success!!!!")
                 return proxy
             print(proxy, "Fail to connect")
         except Exception:
-            requests.get("http://101.132.128.215:5010/delete/?proxy={}".format(proxy))
+            print(proxy, "Fail to connect")
 
 
 def get_csrftoken(init_text):
